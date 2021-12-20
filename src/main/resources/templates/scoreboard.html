@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/score.css}">
+	<title>Score Board</title>
+
+	<style>
+		body{
+			background-color: antiquewhite;
+		}
+		.mx-auto{
+			background-color: #333333;
+			border-color: white;
+		}
+		.calendar-text { margin-top: .3em; }
+	</style>
+</head>
+<body>
+
+	<!-- Importing NavBar -->
+	<div th:insert="navbar.html :: navbar"></div>
+	
+	<!-- Main Container Start -->
+	<div class="main-container container py-5 px-4">
+		<h3 class="bg-danger text-center mb-5 p-2">Top Scores Of All Time</h3>
+		
+		<table class="bg-dark text-light">
+			<tr>
+				<th>Rank</th>
+				<th>Name</th>
+				<th>Languge</th>
+				<th>Score</th>
+			</tr>
+			<tr th:each="score,i : ${sList}" class="rank">
+				<td th:text="${i.index+1}"></td>
+				<td th:text="${score.username}"></td>
+				<td th:text="${score.option}"></td>
+				<td th:text="${score.totalCorrect}"></td>
+			</tr>
+
+		</table>
+		<div class="d-flex flex-row justify-content-between align-items-center p-3">
+			<button type="button" class="btn btn-success pre" onclick="prev()"><< Previous</button>
+			<button type="button" class="btn btn-success n nextb" onclick="next()">Next >></button>
+		</div>
+		<br>
+		<div class="d-flex">
+			<button type="button" th:onclick="window.location.href='/'"
+					class="btn btn-success mx-auto">Back to Homepage</button>
+		</div>
+	</div>
+
+
+	<!-- Importing Footer -->
+	<div th:insert="footer.html :: footer"></div>
+	<!-- Bootstrap JS -->
+
+	<script>
+		var now = 0;
+		const nextButton = document.getElementsByClassName("nextb");
+		const preveButton = document.getElementsByClassName("pre");
+
+		const rank = document.getElementsByClassName("rank")
+
+		preveButton[0].style.visibility = "hidden";
+		for(let i = 0 ; i < rank.length;i++){
+			rank[i].style.display="none";
+		}
+		for (let i = 0; i <= (now + 9) ;i++){
+			rank[i].style.removeProperty("display");
+		}
+		function next() {
+
+			for(let i = now ; i <= now + 9;i++){
+				rank[i].style.display="none";
+			}
+			now += 10;
+			nextAndPre()
+			for (let i = now; i <= Math.min(now + 9,rank.length-1); i++){
+				rank[i].style.removeProperty("display");
+			}
+		}
+		function prev() {
+
+			for(let i = now ; i <= Math.min(now + 9,rank.length-1);i++){
+				rank[i].style.display="none";
+			}
+
+			now -= 10;
+			nextAndPre()
+			for (let i = now; i <= now + 9; i++){
+				rank[i].style.removeProperty("display");
+			}
+		}
+
+		function nextAndPre() {
+			if(now + 10 === rank.length-1 || now + 10 >= rank.length){
+				nextButton[0].style.visibility = "hidden";
+			}else{
+				nextButton[0].style.visibility = "visible";
+			}
+
+			if(now === 0) {
+				preveButton[0].style.visibility = "hidden";
+			}else{
+				preveButton[0].style.visibility = "visible";
+			}
+		}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

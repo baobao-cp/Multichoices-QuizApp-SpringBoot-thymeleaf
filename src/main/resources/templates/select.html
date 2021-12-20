@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Choose option</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: #333;
+            background-color: whitesmoke;
+        }
+
+        h1, h2, h3, h4, h5, h6{
+            font-weight: 200;
+        }
+
+        h1{
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2fcc71;
+            max-width: 40%;
+            margin: 20px auto;
+        }
+
+        /* CONTAINERS */
+
+        .container {max-width: 850px; width: 100%; margin: 0 auto;}
+        .four { width: 32.26%; max-width: 32.26%;}
+
+
+        /* COLUMNS */
+
+        .col {
+            display: block;
+            float:left;
+            margin: 1% 0 1% 1.6%;
+            border-radius: 10px;
+        }
+
+        .col:first-of-type { margin-left: 0; }
+
+        /* CLEARFIX */
+
+        .cf:before,
+        .cf:after {
+            content: " ";
+            display: table;
+        }
+
+        .cf:after {
+            clear: both;
+        }
+
+        .cf {
+            *zoom: 1;
+        }
+
+        /* FORM */
+
+        .form .plan input, .form .payment-plan input, .form .payment-type input{
+            display: none;
+        }
+
+        .form label{
+            position: relative;
+            color: #fff;
+            background-color: #aaa;
+            font-size: 26px;
+            text-align: center;
+            height: 150px;
+            line-height: 150px;
+            display: block;
+            cursor: pointer;
+            border: 3px solid transparent;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .form .plan input:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
+            border: 3px solid #333;
+            background-color: #2fcc71;
+        }
+
+        .form .plan input:checked + label:after, form .payment-plan input:checked + label:after, .form .payment-type input:checked + label:after{
+            content: "\2713";
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 100%;
+            border: 1px solid #333;
+            background-color: blue;
+            z-index: 999;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+        }
+
+        .submit{
+            border-radius: 10px;
+            padding: 15px 60px;
+            display: inline-block;
+            border: none;
+            margin: 20px 0;
+            background-color: #2fcc71;
+            color: #fff;
+            border: 1px solid #333;
+            font-size: 18px;
+            -webkit-transition: transform 0.3s ease-in-out;
+            -o-transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out;
+
+        }
+
+        .submit:hover{
+            background-color: red;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Importing NavBar -->
+<div th:insert="navbar.html :: navbar"></div>
+
+<!-- Main Container Start -->
+<div class="container">
+    <h1>Choose Option</h1>
+    <form class="form cf" method="post" th:action="@{/quiz}">
+        <input type="hidden" th:name="username" th:value="${username}"/>
+        <section class="plan cf">
+            <h2>Choose Level:</h2>
+            <input  type="radio" name="radio1" id="free" value="free"><label class="free-label four col" for="free">Easy</label>
+            <input  type="radio" name="radio1" id="basic" value="basic" checked><label class="basic-label four col" for="basic">Medium</label>
+            <input  type="radio" name="radio1" id="premium" value="premium"><label class="premium-label four col" for="premium">Hard</label>
+        </section>
+        <section class="payment-plan cf">
+            <h2>Select Language:</h2>
+            <input  type="radio" name="choose" id="monthly" value="eng" checked><label class="monthly-label four col" for="monthly">English</label>
+            <input  type="radio" name="choose" id="yearly" value="japan"><label class="yearly-label four col" for="yearly">Japan</label>
+            <input  type="radio" name="choose" id="day" value="java"><label class="day-label four col" for="day">Java</label>
+        </section>
+        <input class="submit" type="submit" value="Submit">
+    </form>
+</div>
+
+
+
+<!-- Importing Footer -->
+<div th:insert="footer.html :: footer"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+</html>
